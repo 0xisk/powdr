@@ -86,6 +86,15 @@ jobs:
       run: PILCOM=$(pwd)/pilcom/ cargo nextest run --archive-file tests.tar.zst --verbose
     - name: Run examples
       run: cargo run --example hello_world
+    - name: Install cargo-llvm-cov
+      run: cargo install cargo-llvm-cov
+    - name: Run tests with coverage
+      run: cargo llvm-cov --all-features --workspace --html --output-dir=target/llvm-cov/html
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-report
+        path: target/llvm-cov/html
 
   test_slow:
     strategy:
@@ -131,3 +140,12 @@ jobs:
         fi
         PILCOM=$(pwd)/pilcom/ cargo nextest run --archive-file tests.tar.zst --verbose --run-ignored=ignored-only --no-capture -E "$TESTS"
       shell: bash
+    - name: Install cargo-llvm-cov
+      run: cargo install cargo-llvm-cov
+    - name: Run tests with coverage
+      run: cargo llvm-cov --all-features --workspace --html --output-dir=target/llvm-cov/html
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-report
+        path: target/llvm-cov/html
