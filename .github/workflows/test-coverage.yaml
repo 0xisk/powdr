@@ -43,10 +43,10 @@ jobs:
     - uses: actions/checkout@v3
       with:
         submodules: recursive
-    - name: Download build artifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: tests_archive
+    # - name: Download build artifacts
+    #   uses: actions/download-artifact@v2
+    #   with:
+    #     name: tests_archive
     - name: ⚡ Cache nodejs
       uses: actions/cache@v3
       with:
